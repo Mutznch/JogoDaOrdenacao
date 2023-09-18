@@ -36,16 +36,4 @@ public class Pilha {
     public boolean estaVazia() {
         return topo == null;
     }
-
-    public void imprimir() {
-        Node atual = topo;
-        if (topo == null) {
-            System.out.println("vazia");
-            return;
-        } while (atual.getProximo() != null) {
-            System.out.print(atual.getInfo() + ", ");
-            atual = atual.getProximo();
-        }
-        System.out.println(atual.getInfo() + '\n');
-    }
 }

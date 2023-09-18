@@ -114,16 +114,19 @@ public class Jogo {
                         -->\s""");
         }
         partida.mover(de, para);
-        if (partida.estaOrdenado()) ganhou();
+        if (partida.estaOrdenado()) {
+            partida.imprimirPilhas();
+            ganhou();
+        }
         else jogar();
     }
 
     public void resolver() {
-
+        jogada = partida.resolver();
+        ganhou();
     }
 
     public void ganhou() {
-        partida.imprimirPilhas();
         System.out.println("PARABÉNS! Pilha ordenada em " + jogada + " jogadas\n\n" +
                 "Digite qualquer valor para voltar ao menu ");
         scan.next();

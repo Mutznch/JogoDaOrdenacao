@@ -60,7 +60,7 @@ public class Partida {
     }
 
     public boolean pilhaEstaVazia(int n) {
-        return pilhas[n].estaVazia();
+        return pilhas[n-1].estaVazia();
     }
 
     public void imprimirPilhas() {
@@ -88,7 +88,69 @@ public class Partida {
         System.out.println(string);
     }
 
+    public int getTamanho() {
+        return tamanho;
+    }
+
     public void setModo(int modo) {
         this.modo = modo;
     }
+
+    public int resolver() {
+        Pilha p = new Pilha(pilhas[0].getTopo());
+        int[] valores = new int[tamanho];
+        int atual = 0;
+        int ultimaPosicao = 0;
+        int posicaoAtual = 0;
+        int jogadas = 0;
+
+
+        for (int i = 0; i < tamanho; i++)
+            valores[i] = p.pop();
+
+        while (!estaOrdenado()) {
+
+            if (modo == 0) {
+                atual = 0;
+                for (int i = 0; i < tamanho; i++) {
+                    if (valores[i] > atual) {
+                        atual = valores[i];
+                        posicaoAtual = i;
+                    }
+                }
+            }
+            else {
+                atual = 101;
+                for (int i = 0; i < tamanho; i++)
+                    if (valores[i] < atual && valores[i] != -1) {
+                        atual = valores[i];
+                        posicaoAtual = i;
+                    }
+            }
+            boolean p1 = ultimaPosicao <= posicaoAtual;
+            int n = ultimaPosicao;
+            while (valores[n] != atual) {
+                if (p1) {
+                    if (valores[n] != -1)
+                        mover(1, 3);
+                    n++;
+                } else {
+                    if (valores[n] != -1)
+                        mover(3, 1);
+                    n--;
+                } if (valores[n] != -1) {
+                    imprimirPilhas();
+                    jogadas++;
+                }
+            }
+            if (p1) mover(1,2);
+            else mover(3,2);
+            imprimirPilhas();
+            valores[posicaoAtual] = -1;
+            ultimaPosicao = posicaoAtual;
+            jogadas++;
+        }
+        return jogadas;
+    }
+        // [1,-1,-1,-1,-1]   [][2,3,4,5][1]
 }
